@@ -50,7 +50,7 @@
     "urijs": "1.18.10",
     "imgix-core-js": "1.0.5",
     "ember-cli-node-assets": "0.2.2",
-    "ember-resize": "0.0.17",
+    "ember-resize": "0.0.17"
   },
   "ember-addon": {
     "configPath": "tests/dummy/config"
