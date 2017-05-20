@@ -130,6 +130,7 @@ export default Mixin.create({
   ),
 
   /**
+   * Listen for resize events on the window
    * Fire off a resize after our element has been added to the DOM.
    */
   didInsertElement: function() {
@@ -137,8 +138,7 @@ export default Mixin.create({
   },
 
   /**
-   * Observer to trigger image resizes, but debounced.
-   * @private
+   * Remove resize event listener
    */
   didResize: function() {
     let debounceRate = 200;
