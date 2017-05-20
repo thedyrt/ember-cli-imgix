@@ -49,8 +49,7 @@
     "blueimp-md5": "2.7.0",
     "urijs": "1.18.10",
     "imgix-core-js": "1.0.5",
-    "ember-cli-node-assets": "0.2.2",
-    "ember-resize": "github:thedyrt/ember-resize#5a539a4df95b75cd097761751a64c105e92a7897"
+    "ember-cli-node-assets": "0.2.2"
   },
   "ember-addon": {
     "configPath": "tests/dummy/config"
