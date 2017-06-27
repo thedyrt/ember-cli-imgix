@@ -21,6 +21,10 @@ export default Mixin.create({
 
   useParentWidth: false,
 
+  useLQIP: false,
+
+  resizeService: service('resize'),
+
   /**
    * @public
    * @property {string} The main entry point for our component. The final `src` will be set based on a manipulation of this property.
@@ -64,6 +68,8 @@ export default Mixin.create({
   _heightFromPath: computed('_query', function() {
     return get(this, '_query.h');
   }),
+
+  _hasLoadedLowQualityVersion: false,
 
   /**
    * @private
@@ -265,5 +271,9 @@ export default Mixin.create({
    */
   _config: computed(function() {
     return getOwner(this).resolveRegistration('config:environment');
-  })
+  }),
+
+  _handleImageLoad() {
+    this.set('_hasLoadedLowQualityVersion', true);
+  },
 });
