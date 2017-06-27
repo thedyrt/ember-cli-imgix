@@ -25,7 +25,7 @@ export default Ember.Mixin.create({
 
   useParentWidth: false,
 
-  resizeService: service('resize'),
+  useLQIP: false,
 
   /**
    * @public
@@ -59,6 +59,8 @@ export default Ember.Mixin.create({
     return this.get('_query.h');
   }),
 
+  _hasLoadedLowQualityVersion: false,
+
   /**
    * @private
    * @default 0
@@ -74,7 +76,7 @@ export default Ember.Mixin.create({
    * @property {string}
    * @return the fully built string
    */
-  src: computed('_path', '_query', '_width', '_height', '_dpr', 'crop', 'fit', function () {
+  src: computed('_path', '_query', '_width', '_height', '_dpr', 'crop', 'fit', 'useLQIP', '_hasLoadedLowQualityVersion', function () {
     if (!this.get('_width')) { return; }
 
     let env = this.get('_config');
@@ -98,6 +100,14 @@ export default Ember.Mixin.create({
       merge(options, this.get('_debugParams'));
     }
 
+    if(this.get('LQIP') && !this.get('_hasLoadedLowQualityVersion')) {
+      merge(options, {
+        blur: 200,
+        px: 16,
+        auto: 'format',
+      });
+    }
+
     // This is where the magic happens. These are the parameters that force the
     // responsiveness that we're looking for.
     merge(options, {
@@ -115,8 +125,13 @@ export default Ember.Mixin.create({
    */
   didInsertElement: function (...args) {
     this._incrementResizeCounter = this._incrementResizeCounter.bind(this);
+    this._handleImageLoad = this._handleImageLoad.bind(this);
+
     this.get('imgixResizeListener').subscribe(this._incrementResizeCounter);
     Ember.run.schedule('afterRender', this, this._incrementResizeCounter);
+
+    this.$('img').on('load', this._handleImageLoad);
+
     this._super(...args);
   },
 
@@ -125,6 +140,7 @@ export default Ember.Mixin.create({
    */
   willDestroyElement: function(...args) {
     this.get('imgixResizeListener').unsubscribe(this.handleResizeEvent);
+    this.$('img').off('load', this._handleImageLoad);
     this._super(...args);
   },
 
@@ -226,5 +242,9 @@ export default Ember.Mixin.create({
    */
   _config: computed(function () {
     return getOwner(this).resolveRegistration('config:environment');
-  })
+  }),
+
+  _handleImageLoad() {
+    this.set('_hasLoadedLowQualityVersion', true);
+  },
 });
