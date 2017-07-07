@@ -23,7 +23,8 @@ export default Mixin.create({
 
   useLQIP: false,
 
-  resizeService: service('resize'),
+  // on load callback you can use
+  onLoad: null,
 
   /**
    * @public
@@ -273,7 +274,8 @@ export default Mixin.create({
     return getOwner(this).resolveRegistration('config:environment');
   }),
 
-  _handleImageLoad() {
+  _handleImageLoad(event) {
     this.set('_hasLoadedLowQualityVersion', true);
+    this.get('onLoad') && this.get('onLoad')(event.originalEvent);
   },
 });
