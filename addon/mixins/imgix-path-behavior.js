@@ -27,6 +27,9 @@ export default Ember.Mixin.create({
 
   useLQIP: false,
 
+  // on load callback you can use
+  onLoad: null,
+
   /**
    * @public
    * @property {string} The main entry point for our component. The final `src` will be set based on a manipulation of this property.
@@ -244,7 +247,8 @@ export default Ember.Mixin.create({
     return getOwner(this).resolveRegistration('config:environment');
   }),
 
-  _handleImageLoad() {
+  _handleImageLoad(event) {
     this.set('_hasLoadedLowQualityVersion', true);
+    this.get('onLoad') && this.get('onLoad')(event.originalEvent);
   },
 });
