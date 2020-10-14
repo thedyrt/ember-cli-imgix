@@ -219,6 +219,14 @@ module('Integration | Component | imgix image', function(hooks) {
     assert.equal(this.$('img').attr('draggable'), 'false');
   });
 
+  test('attribute bindings: the loading argument will set the loading attribute on the image element', async function(assert) {
+    await render(
+      hbs`<div style='width:1250px;height:200px;'>{{imgix-image path='/users/1.png' loading='lazy'}}</div>`
+    );
+
+    assert.equal(this.$('img').attr('loading'), 'lazy');
+  });
+
   test('attribute bindings: the crossorigin argument will set the crossorigin attribute on the image element', async function(assert) {
     assert.expect(1);
 

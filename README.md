@@ -152,6 +152,7 @@ crossorigin: 'anonymous', // img element crossorigin attr
 alt: '', // img element alt attr
 draggable: true, // img element draggable attr
 disableSrcSet: false, // disable srcSet generation
+loading: 'eager',
 options: {}, // arbitrary imgix options
 
 width: null, // override if you want to hardcode a width into the image
