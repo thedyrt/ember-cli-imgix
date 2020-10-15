@@ -47,6 +47,7 @@ export default Component.extend({
     'alt',
     'crossorigin',
     'draggable',
+    'loading',
     `src:${attributeMap.src}`,
     `placeholderSrc:${attributeMap.src === 'src' ? '_src' : 'src'}`,
     `srcset:${attributeMap.srcset}`,
@@ -61,6 +62,7 @@ export default Component.extend({
   crossorigin: 'anonymous', // img element crossorigin attr
   alt: '', // img element alt attr
   draggable: true, // img element draggable attr
+  loading: 'eager', // eager or lazy
   options: {}, // arbitrary imgix options
   disableLibraryParam: false,
 
